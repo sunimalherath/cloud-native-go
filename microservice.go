@@ -1,20 +1,25 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
+	"github.com/sunimalherath/cloud-native-go/api"
+	"net/http"
 	"os"
 )
 
 func main() {
 	http.HandleFunc("/", index)
 	http.HandleFunc("/api/echo", echo)
+
+	http.HandleFunc("/api/books", api.BooksHandlFunc)
+	http.HandleFunc("/api/books/", api.BookHandleFunc)
+
 	http.ListenAndServe(port(), nil)
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w,"welcome to the cloud native go...")
+	fmt.Fprintf(w, "welcome to the cloud native go...")
 }
 
 func echo(w http.ResponseWriter, r *http.Request) {
